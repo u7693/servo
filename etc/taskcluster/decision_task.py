@@ -46,6 +46,7 @@ def tasks(task_for):
             "try": all_tests,
             "try-taskcluster": [
                 # Add functions here as needed, in your push to that branch
+                linux_tidy_unit, linux_docs_check, linux_wpt,
             ],
             "master": [
                 upload_docs,
@@ -176,16 +177,15 @@ def linux_tidy_unit():
         .with_max_run_time_minutes(75)
         .with_script("""
             ./mach test-tidy --no-progress --all
-            python3 ./mach test-tidy --no-progress --all --no-wpt
-            python3 ./mach build --dev
-            python3 ./mach test-unit
-            python3 ./mach package --dev
-            python3 ./mach build --dev --features refcell_backtrace
-            python3 ./mach build --dev --features layout-2020
-            python3 ./mach build --dev --libsimpleservo
-            python3 ./mach build --dev -p servo-gst-plugin
-            python3 ./mach build --dev --media-stack=dummy
-            python3 ./mach test-tidy --no-progress --self-test
+            ./mach build --dev
+            ./mach test-unit
+            ./mach package --dev
+            ./mach build --dev --features refcell_backtrace
+            ./mach build --dev --features layout-2020
+            ./mach build --dev --libsimpleservo
+            ./mach build --dev -p servo-gst-plugin
+            ./mach build --dev --media-stack=dummy
+            ./mach test-tidy --no-progress --self-test
 
             ./etc/memory_reports_over_time.py --test
             ./etc/taskcluster/mock.py
@@ -641,7 +641,7 @@ def wpt_chunks(platform, make_chunk_task, build_task, total_chunks, processes,
                     --log-errorsummary wpt-mp-errorsummary.log \
                     eventsource \
                     | cat
-                time env PYTHONIOENCODING=utf-8 python3 ./mach test-wpt --release \
+                time env PYTHONIOENCODING=utf-8 ./mach test-wpt --release \
                     --processes $PROCESSES \
                     --log-raw test-wpt-py3.log \
                     --log-errorsummary wpt-py3-errorsummary.log \
