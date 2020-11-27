@@ -33,7 +33,9 @@ jobs:
         run: ./mach bootstrap-gstreamer
 
       - name: Build
-        run: ./mach build -d
+        run: |
+          source ~/.cargo/bin/env
+          ./mach build -d
 
       - name: Run a multi-line script
         run: |
