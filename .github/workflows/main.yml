@@ -34,7 +34,7 @@ jobs:
 
       - name: Build
         run: |
-          . ~/.cargo/bin/env
+          . /root/.cargo/bin/env
           ./mach build -d
 
       - name: Run a multi-line script
