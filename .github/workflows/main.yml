@@ -29,11 +29,12 @@ jobs:
         with:
           fetch-depth: 2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Prep build environment
+        run: ./mach bootstrap-gstreamer
+
+      - name: Build
         run: ./mach build -d
 
-      # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
