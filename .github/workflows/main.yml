@@ -38,6 +38,7 @@ jobs:
             resources
 
   wpt1:
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -61,6 +62,7 @@ jobs:
           python3 ./mach filter-intermittents wpt-jsonsummary.log --log-intermittents=intermittents.log --log-filteredsummary=filtered-wpt-summary.log --tracker-api=defualt --reporter-api=default
 
   wpt2:
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
