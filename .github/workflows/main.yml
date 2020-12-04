@@ -32,11 +32,12 @@ jobs:
           brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile
           brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile-build
       - name: Release build
-        run: python3 ./mach build --release
-        env:
-          OPENSSL_INCLUDE_DIR: $(brew --prefix openssl)/include
-          OPENSSL_LIB_DIR: $(brew --prefix openssl)/lib
-          PKG_CONFIG_PATH: $(brew --prefix libffi)/lib/pkgconfig/:$(brew --prefix zlib)/lib/pkgconfig:$PKG_CONFIG_PATH
+        run: |
+          export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)/include"
+          export OPENSSL_LIB_DIR="$(brew --prefix openssl)/lib"
+          export PKG_CONFIG_PATH="$(brew --prefix libffi)/lib/pkgconfig/"
+          export PKG_CONFIG_PATH="$(brew --prefix zlib)/lib/pkgconfig/:$PKG_CONFIG_PATH"
+          python3 ./mach build --release
       - name: Package binary
         run: tar -czf target.tar.gz target/release/servo target/release/*.dylib resources
       - name: Archive binary
