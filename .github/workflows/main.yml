@@ -52,7 +52,7 @@ jobs:
       - name: Smoketest
         run: python3 ./mach smoketest          
       - name: Package binary
-        run: gnu-tar -czf target.tar.gz target/release/servo target/release/*.dylib resources
+        run: gtar -czf target.tar.gz target/release/servo target/release/*.dylib resources
       - name: Archive binary
         uses: actions/upload-artifact@v2
         with:
@@ -80,7 +80,7 @@ jobs:
       - name: Prep test environment
         run: |
           brew install gnu-tar
-          gnu-tar -xzf target.tar.gz
+          gtar -xzf target.tar.gz
           python3 -m pip install --upgrade pip virtualenv
           brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile
       - name: Smoketest
