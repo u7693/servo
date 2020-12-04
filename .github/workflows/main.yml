@@ -19,10 +19,10 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-20.04
-    steps:
+  #build:
+  #  name: Build
+  #  runs-on: ubuntu-20.04
+  #  steps:
       #- uses: actions/checkout@v2
       #  with:
       #    fetch-depth: 2
@@ -46,7 +46,7 @@ jobs:
       #    path: target.tar.gz
 
   wpt1:
-    needs: build
+    #needs: build
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
