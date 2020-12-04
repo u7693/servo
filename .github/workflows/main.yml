@@ -45,7 +45,7 @@ jobs:
           path: target.tar.gz
 
   wpt1:
-    needs: macos-build
+    needs: build-mac
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
