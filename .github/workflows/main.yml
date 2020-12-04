@@ -31,6 +31,7 @@ jobs:
           python3 -m pip install --upgrade pip virtualenv
           brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile
           brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile-build
+          brew install openssl@1.1
       - name: Release build
         run: |
           export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)/include"
