@@ -28,6 +28,7 @@ jobs:
           fetch-depth: 2
       - name: Bootstrap
         run: |
+          python3 -m pip install --upgrade pip virtualenv
           brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile
           brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile-build
       - name: Release build
