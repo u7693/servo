@@ -55,7 +55,7 @@ gfx = { path = "../gfx" }
 gfx_traits = { path = "../gfx_traits" }
 gleam = "0.12"
 gstreamer = { version = "0.15", features = ["v1_16"], optional = true }
-ipc-channel = "0.14"
+ipc-channel = { version = "0.14", features = ["force-inprocess"] }
 keyboard-types = "0.5"
 layout_thread_2013 = { path = "../layout_thread", optional = true }
 layout_thread_2020 = { path = "../layout_thread_2020", optional = true }
