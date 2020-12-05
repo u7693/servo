@@ -75,7 +75,7 @@ jobs:
       - name: Fake build
         run: |
           wget https://joshmatthews.net/release-binary-macos.zip
-          unzip release-binary.zip
+          unzip release-binary-macos.zip
 
       - name: Prep test environment
         run: |
