@@ -19,63 +19,63 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build-mac:
-    name: Build (macOS)
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-      - name: Bootstrap
-        run: |
-          python3 -m pip install --upgrade pip virtualenv
-          brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile
-          brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile-build
-          brew uninstall openssl@1.0.2t
-          rm -rf /usr/local/etc/openssl
-          rm -rf /usr/local/etc/openssl@1.1
-          brew install openssl@1.1 gnu-tar
-      - name: Precheck
-        run: df -h
-      - name: Release build
-        run: |
-          export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)/include"
-          export OPENSSL_LIB_DIR="$(brew --prefix openssl)/lib"
-          export PKG_CONFIG_PATH="$(brew --prefix libffi)/lib/pkgconfig/"
-          export PKG_CONFIG_PATH="$(brew --prefix zlib)/lib/pkgconfig/:$PKG_CONFIG_PATH"
-          python3 ./mach build --release
-      - name: Postcheck
-        run: |
-          ls -la target/release/servo
-          file target/release/servo
-          df -h
-      - name: Smoketest
-        run: python3 ./mach smoketest          
-      - name: Package binary
-        run: gtar -czf target.tar.gz target/release/servo target/release/*.dylib resources
-      - name: Archive binary
-        uses: actions/upload-artifact@v2
-        with:
-          name: release-binary-macos
-          path: target.tar.gz
+  #build-mac:
+  #  name: Build (macOS)
+    # runs-on: macos-10.15
+    # steps:
+    #   - uses: actions/checkout@v2
+    #     with:
+    #       fetch-depth: 2
+    #   - name: Bootstrap
+    #     run: |
+    #       python3 -m pip install --upgrade pip virtualenv
+    #       brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile
+    #       brew bundle install --verbose --no-upgrade --file=etc/taskcluster/macos/Brewfile-build
+    #       brew uninstall openssl@1.0.2t
+    #       rm -rf /usr/local/etc/openssl
+    #       rm -rf /usr/local/etc/openssl@1.1
+    #       brew install openssl@1.1 gnu-tar
+    #   - name: Precheck
+    #     run: df -h
+    #   - name: Release build
+    #     run: |
+    #       export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)/include"
+    #       export OPENSSL_LIB_DIR="$(brew --prefix openssl)/lib"
+    #       export PKG_CONFIG_PATH="$(brew --prefix libffi)/lib/pkgconfig/"
+    #       export PKG_CONFIG_PATH="$(brew --prefix zlib)/lib/pkgconfig/:$PKG_CONFIG_PATH"
+    #       python3 ./mach build --release
+    #   - name: Postcheck
+    #     run: |
+    #       ls -la target/release/servo
+    #       file target/release/servo
+    #       df -h
+    #   - name: Smoketest
+    #     run: python3 ./mach smoketest          
+    #   - name: Package binary
+    #     run: gtar -czf target.tar.gz target/release/servo target/release/*.dylib resources
+    #   - name: Archive binary
+    #     uses: actions/upload-artifact@v2
+    #     with:
+    #       name: release-binary-macos
+    #       path: target.tar.gz
 
   wpt1:
-    needs: build-mac
+    #needs: build-mac
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
 
-      - name: Download release binary
-        uses: actions/download-artifact@v2
-        with:
-          name: release-binary-macos
+      # - name: Download release binary
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: release-binary-macos
 
-  #    - name: Fake build
-  #      run: |
-  #        wget https://joshmatthews.net/release-binary.zip
-  #        unzip release-binary.zip
+      - name: Fake build
+        run: |
+          wget https://joshmatthews.net/release-binary-macos.zip
+          unzip release-binary.zip
 
       - name: Prep test environment
         run: |
