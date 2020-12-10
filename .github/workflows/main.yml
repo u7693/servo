@@ -80,7 +80,7 @@ jobs:
         run: python3 ./mach smoketest
       - name: Run tests
         run: |
-          python3 ./mach test-wpt --release --processes=2 --timeout-multiplier=4 --total-chunks=20 --this-chunk=1 --log-raw=test-wpt.log --log-servojson=wpt-jsonsummary.log --always-succeed | cat
+          python3 ./mach test-wpt --release --processes=3 --timeout-multiplier=8 --total-chunks=20 --this-chunk=1 --log-raw=test-wpt.log --log-servojson=wpt-jsonsummary.log --always-succeed | cat
           python3 ./mach filter-intermittents wpt-jsonsummary.log --log-intermittents=intermittents.log --log-filteredsummary=filtered-wpt-summary.log --tracker-api=default --reporter-api=default
 
       - name: Archive logs
